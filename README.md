@@ -119,10 +119,3 @@ python api_server.py
 
 ## License
 Distributed under the MIT License. See `LICENSE` for more information.
-
----
-
-## Contact
-**W-govind** - [GitHub Profile](https://github.com/W-govind)
-
-Project Link: [https://github.com/W-govind/AASMA](https://github.com/W-govind/AASMA)
