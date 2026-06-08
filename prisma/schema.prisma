@@ -1,0 +1,143 @@
+generator client {
+  provider      = "prisma-client-js"
+  output        = "../src/generated/client"
+  binaryTargets = ["native", "rhel-openssl-3.0.x"]
+}
+
+datasource db {
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
+}
+
+model User {
+  id            String    @id @default(cuid())
+  name          String?
+  email         String?   @unique
+  password      String
+  role          String    @default("clinician")
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+}
+
+model Patient {
+  id              String    @id @default(cuid())
+  firstName       String
+  lastName        String
+  age             Int
+  gender          String
+  medicalHistory  String
+  
+  // Direct Wearable signals
+  heartRate       Float     @default(70)
+  hrv             Float     @default(50)
+  systolicBp      Float     @default(120)
+  diastolicBp     Float     @default(80)
+  spo2            Float     @default(98)
+  temperature     Float     @default(36.5)
+  activityLevel   Float     @default(5.0)
+
+  // Environmental signals
+  pm25            Float     @default(15.0)
+  aqi             Float     @default(45.0)
+
+  // Derived ML Trends
+  hrTrend6h       Float     @default(0.0)
+  bpTrend6h       Float     @default(0.0)
+  anomalyZScore   Float     @default(0.0)
+  adherenceRate   Float     @default(0.85) // Behavioral Nudging Metric
+
+  // Additional Vitals
+  respiratoryRate Float     @default(16.0)
+  glucoseLevel    Float     @default(100.0)
+  cholesterol     Float     @default(200.0)
+  bmi             Float     @default(22.0)
+
+  // Behavioral Data
+  dailyFiberIntake Float    @default(25.0)
+  sleepHours       Float    @default(7.0)
+  stressLevel      Float    @default(3.0)
+  smokingStatus    String   @default("None")
+  alcoholIntake    Float    @default(0.0)
+  exerciseMinutes  Float    @default(30.0)
+  medicineAdherence Boolean? @default(true)
+
+  // Scores
+  riskScore       Float     @default(0)
+  status          String    @default("Stable")
+  confidence      Float     @default(0)
+  lastUpdated     DateTime  @default(now())
+  
+  aiLogs          AILog[]
+  wearableLogs    WearableLog[]
+  prescriptions   Medication[]
+  doctorId        String?
+  doctor          Doctor?    @relation(fields: [doctorId], references: [id])
+}
+
+model Doctor {
+  id          String    @id @default(cuid())
+  name        String
+  specialty   String
+  hospital    String
+  email       String    @unique
+  patients    Patient[]
+  
+  // Burnout Detection Fields
+  shiftHours  Float     @default(0)
+  patientLoad Int       @default(0)
+  sleepHours  Float     @default(8)
+  burnoutRisk Float     @default(0)
+  
+  createdAt   DateTime  @default(now())
+}
+
+model ClinicalFeedback {
+  id          String   @id @default(cuid())
+  entityType  String   // e.g., "RiskScore", "DrugAnalysis"
+  entityId    String
+  feedback    String   // e.g., "Correct", "Incorrect"
+  comments    String?
+  clinicianId String?
+  timestamp   DateTime @default(now())
+}
+
+model Medication {
+  id          String   @id @default(cuid())
+  name        String
+  dosage      String
+  frequency   String
+  patientId   String
+  patient     Patient  @relation(fields: [patientId], references: [id])
+  startDate   DateTime @default(now())
+  status      String   @default("Active")
+}
+
+model AILog {
+  id          String   @id @default(cuid())
+  patientId   String
+  patient     Patient  @relation(fields: [patientId], references: [id])
+  module      String
+  output      String
+  timestamp   DateTime @default(now())
+}
+
+model WearableLog {
+  id          String   @id @default(cuid())
+  patientId   String
+  patient     Patient  @relation(fields: [patientId], references: [id])
+  heartRate   Float
+  oxygenLevel Float
+  activity    Float
+  timestamp   DateTime @default(now())
+}
+
+model ChatHistory {
+  id          String   @id @default(cuid())
+  userId      String
+  patientId   String?
+  role        String
+  content     String
+  timestamp   DateTime @default(now())
+}
+

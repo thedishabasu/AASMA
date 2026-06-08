@@ -1,0 +1,37 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: aasma-backend
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: aasma-backend
+  template:
+    metadata:
+      labels:
+        app: aasma-backend
+    spec:
+      containers:
+      - name: aasma-backend
+        image: aasma-backend:latest
+        ports:
+        - containerPort: 8000
+        env:
+        - name: DATABASE_URL
+          value: "sqlite:///aasma.db"
+        - name: KAFKA_BOOTSTRAP_SERVERS
+          value: "kafka-service:9092"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: aasma-backend-service
+spec:
+  selector:
+    app: aasma-backend
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 8000
+  type: LoadBalancer
