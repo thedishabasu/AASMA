@@ -1,4 +1,4 @@
-# AASMA: Adaptive Agent-based Smart Multimodal Assistant 🏥✨
+# AASMA: Adaptive Agent-based Smart Multimodal Assistant
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Next.js](https://img.shields.io/badge/Next.js-15-black)](https://nextjs.org/)
@@ -10,7 +10,7 @@
 
 ---
 
-## 🌟 Key Pillars
+## Key Pillars
 
 ### 1. Multimodal Intelligence Mesh
 - **Fusion Engine**: Combines static EHR data (60% weight) with dynamic wearable signals (40% weight) for high-precision risk scoring.
@@ -27,7 +27,7 @@
 
 ---
 
-## 🏗️ System Architecture
+## System Architecture
 
 ```mermaid
 graph TD
@@ -61,7 +61,7 @@ graph TD
 
 ---
 
-## 🛠️ Tech Stack
+## Tech Stack
 
 - **Frontend**: [Next.js](https://nextjs.org/), [Tailwind CSS](https://tailwindcss.com/), [Framer Motion](https://www.framer.com/motion/), [Shadcn/UI](https://ui.shadcn.com/)
 - **Backend**: [Python](https://www.python.org/), [FastAPI](https://fastapi.tiangolo.com/), [Uvicorn](https://www.uvicorn.org/)
@@ -71,7 +71,7 @@ graph TD
 
 ---
 
-## 🚀 Installation & Setup
+## Installation & Setup
 
 ### 1. Clone the Repository
 ```bash
@@ -109,7 +109,7 @@ python api_server.py
 
 ---
 
-## 🔬 Scientific Foundations
+## Scientific Foundations
 
 - **Prospect Theory**: Our Behavioral Nudging module applies the 2.5x psychological weight of loss framing to improve patient adherence.
 - **Fairness Monitoring**: Real-time evaluation across protected attributes (Age, Gender) using Demographic Parity and Equalized Opportunity metrics.
@@ -117,12 +117,12 @@ python api_server.py
 
 ---
 
-## 📄 License
+## License
 Distributed under the MIT License. See `LICENSE` for more information.
 
 ---
 
-## 📬 Contact
+## Contact
 **W-govind** - [GitHub Profile](https://github.com/W-govind)
 
 Project Link: [https://github.com/W-govind/AASMA](https://github.com/W-govind/AASMA)
